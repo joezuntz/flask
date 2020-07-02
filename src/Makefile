@@ -14,10 +14,12 @@ OBJ  = ../obj
 SRC  = ../src
 
 # Healpix location (for version 3.60):
-HEALDIR  = /home/skems/prog/Healpix_3.60_2019Dec18/Healpix_3.60
-HEALDATA = $(HEALDIR)/data
+HEALDIR  = /opt/conda
+HEALDATA = /usr/share/healpy/data
 CXXHEAL  = -I$(HEALDIR)/include/healpix_cxx
 LDHEAL   = -L$(HEALDIR)/lib
+CXXGSL   = -I/opt/conda/include
+LDGSL    = -L/opt/conda/lib
 
 # Healpix location (for versions <=3.50):
 #HEALDIR  =  /home/skems/prog/Healpix_3.50_2018Dec10/Healpix_3.50
@@ -87,11 +89,11 @@ endif
 ##################################
 
 # Get Healpix version and set compilation requirements accordingly:
-HEALVERSION := $(shell grep -o '[0-9]*\.[0-9]*' $(HEALDIR)/Version)
-USEXCOMPLEX := $(shell echo "$(HEALVERSION) < 3.30" | bc)# Set to 1 if Healpix version < 3.30, 0 otherwise.
-USEFFTPACK  := $(shell echo "$(HEALVERSION) < 3.50" | bc)# Set to 1 if Healpix version < 3.50, 0 otherwise.
-USEMAP2TGA  := $(shell echo "$(HEALVERSION) < 3.60" | bc)# Set to 1 if Healpix version < 3.60, 0 otherwise.
-USEOLDLIBS  := $(shell echo "$(HEALVERSION) < 3.60" | bc)# Set to 1 if Healpix version < 3.60, 0 otherwise.
+HEALVERSION := $(shell grep -o '[0-9]*\.[0-9]*' $(HEALDIR)/Version)	
+USEXCOMPLEX := 0
+USEFFTPACK  := 1
+USEMAP2TGA  := 1
+USEOLDLIBS  := 1
 
 # Set FFTFLAG according to Healpix version:
 ifeq ($(USEFFTPACK), 1) # v < 3.50
