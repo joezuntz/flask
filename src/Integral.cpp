@@ -2,7 +2,7 @@
 #include <math.h>
 #include "Integral.hpp"
 
-const double EPSq = 1.0e-16;
+const double EPSq = 1.0e-9;
 const int JMAX    = 40;
 const int JMAXP   = (JMAX+1);
 const int K       = 12;
